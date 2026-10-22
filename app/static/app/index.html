@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#1d4ed8" />
+  <title>Elderly Care Monitor</title>
+  <link rel="manifest" href="/manifest.json" />
+  <link rel="apple-touch-icon" href="/static/app/icon-192.png" />
+  <link rel="stylesheet" href="/static/app/styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <h1>Elderly Care Monitor</h1>
+    <div id="connection-status" class="status-chip online">Connected</div>
+  </header>
+
+  <main>
+    <!-- Current status -->
+    <section class="card">
+      <h2>Current Status</h2>
+      <div id="current-status" class="status-banner clear">
+        <span class="status-label">No recent emergency</span>
+      </div>
+    </section>
+
+    <!-- Last hour summary -->
+    <section class="card">
+      <h2>Last 1 Hour</h2>
+      <div class="summary-grid">
+        <div class="summary-item">
+          <div class="summary-value" id="sum-warnings">0</div>
+          <div class="summary-label">Warnings</div>
+        </div>
+        <div class="summary-item">
+          <div class="summary-value" id="sum-emergencies">0</div>
+          <div class="summary-label">Emergencies</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- History visualization -->
+    <section class="card">
+      <h2>History</h2>
+      <div class="range-controls">
+        <button class="range-btn active" data-range="1h">Last Hour</button>
+        <button class="range-btn" data-range="1d">Last Day</button>
+        <button class="range-btn" data-range="1w">Last Week</button>
+        <button class="range-btn" data-range="1m">Last Month</button>
+      </div>
+      <div class="chart-wrap">
+        <canvas id="historyChart"></canvas>
+      </div>
+    </section>
+
+    <!-- Recent alerts list -->
+    <section class="card">
+      <h2>Recent Alerts</h2>
+      <ul id="recent-alerts" class="alert-list"></ul>
+      <p id="alerts-empty" class="empty">No alerts yet.</p>
+    </section>
+  </main>
+
+  <!-- Alert detail modal -->
+  <div id="modal" class="modal hidden">
+    <div class="modal-content">
+      <button id="modal-close" class="modal-close" aria-label="Close">&times;</button>
+      <div id="modal-body"></div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast hidden"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="/static/app/app.js"></script>
+</body>
+</html>

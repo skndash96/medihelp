@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex" />
+  <title>Admin - Elderly Fall Alert</title>
+  <link rel="stylesheet" href="/static/admin/admin.css" />
+</head>
+<body>
+  <header class="admin-header">
+    <h1>Fall Alert Admin</h1>
+    <span class="notice">Local college-project prototype — not production-secure.</span>
+  </header>
+
+  <main class="admin-main">
+    <div class="actions">
+      <button id="btn-warning" class="action-btn warning-btn">
+        <span class="action-title">SEND WARNING</span>
+        <span class="action-sub">LEVEL 1</span>
+      </button>
+      <button id="btn-emergency" class="action-btn emergency-btn">
+        <span class="action-title">SEND EMERGENCY</span>
+        <span class="action-sub">LEVEL 2</span>
+      </button>
+    </div>
+
+    <div id="result" class="result hidden"></div>
+
+    <section class="recent">
+      <h2>Most Recent Alerts</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th><th>Level</th><th>Device</th><th>Time</th>
+            <th>Notification</th><th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="alerts-body"></tbody>
+      </table>
+      <p id="empty" class="empty hidden">No alerts recorded yet.</p>
+    </section>
+  </main>
+
+  <script src="/static/admin/admin.js"></script>
+</body>
+</html>
