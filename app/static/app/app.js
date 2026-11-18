@@ -228,6 +228,19 @@ setInterval(() => updateConnection(navigator.onLine), 3000);
 
 /* ------- Boot ------- */
 (function init() {
-  loadDashboard();
-  setInterval(loadDashboard, 30000);
+  let polling = false;
+
+  async function poll() {
+    if (polling) return;
+
+    polling = true;
+    try {
+      await loadDashboard();
+    } finally {
+      polling = false;
+      setTimeout(poll, 500);
+    }
+  }
+
+  poll();
 })();

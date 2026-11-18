@@ -108,8 +108,9 @@ def _post_alert(
     device_id: Optional[str],
     latitude: Optional[float],
     longitude: Optional[float],
+    g: Optional[float],
 ) -> AlertResponse:
-    logger.info("Alert received: level=%s device=%s", level, device_id)
+    logger.info("Alert received: level=%s device=%s g=%s", level, device_id, g)
 
     alert = _store_alert(db, level, device_id, latitude, longitude)
     notification_type, notification_status = _send_notification(alert)
@@ -142,6 +143,7 @@ async def create_alert(
     device_id: Optional[str] = Query(None),
     lat: Optional[float] = Query(None, description="latitude"),
     lon: Optional[float] = Query(None, description="longitude"),
+    g: Optional[float] = Query(None, description="g value from MPU6050"),
     db: Session = Depends(get_db),
 ):
     """Create a new alert.
@@ -169,7 +171,7 @@ async def create_alert(
             raise HTTPException(status_code=422, detail="latitude must be between -90 and 90")
         if lon is not None and not (-180.0 <= lon <= 180.0):
             raise HTTPException(status_code=422, detail="longitude must be between -180 and 180")
-        data = AlertIn(level=level, device_id=device_id, latitude=lat, longitude=lon)
+        data = AlertIn(level=level, device_id=device_id, latitude=lat, longitude=lon, g=g)
 
     response = _post_alert(
         db,
@@ -177,6 +179,7 @@ async def create_alert(
         data.device_id,
         data.latitude,
         data.longitude,
+        data.g,
     )
     # A failed notification is still a successful alert *storage*, so we
     # report 200 but flag failure in the body. Twilio config errors are

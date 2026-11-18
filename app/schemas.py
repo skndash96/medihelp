@@ -16,6 +16,7 @@ class AlertIn(BaseModel):
     device_id: Optional[str] = None
     latitude: Optional[float] = None
     longitude: Optional[float] = None
+    g: Optional[float] = None
 
     @field_validator("level")
     @classmethod
